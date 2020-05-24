@@ -5,5 +5,3 @@ USER deno
 WORKDIR /app
 
 ADD . .
-
-CMD [ "run", "--allow-net", "index.ts" ]

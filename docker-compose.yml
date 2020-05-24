@@ -3,8 +3,11 @@ services:
   app:
     build: .
     container_name: app
+    command: run --allow-env --allow-read -q src/index.ts
     networks: 
       - deno-app-network
+    volumes: 
+      - .:/app
 
 networks: 
   deno-app-network:
