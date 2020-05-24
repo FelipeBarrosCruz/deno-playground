@@ -5,4 +5,3 @@ for await (const request of server) {
   logger.info("Request received");
   request.respond({ body: "Hello World" });
 }
-

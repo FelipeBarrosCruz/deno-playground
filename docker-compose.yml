@@ -1,13 +1,14 @@
-version: '3'
+version: '3.4'
 services: 
   app:
-    build: .
+    build: 
+      context: .
+      target: development
     container_name: app
-    command: run --allow-env --allow-read --allow-net -q src/index.ts
     networks: 
       - deno-app-network
-    volumes: 
-      - .:/app
+    volumes:
+      - .:/usr/app
     ports: 
       - 3000:3000
     expose:
