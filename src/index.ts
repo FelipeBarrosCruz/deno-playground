@@ -1,5 +1,8 @@
-import config from './config/index.ts'
-import logger from './logger/index.ts' 
+import server from "./http/server.ts";
+import logger from "./logger/index.ts";
 
-logger.info(`App name ${config.APP_NAME}`)
-logger.info(`App port ${config.APP_PORT}`)
+for await (const request of server) {
+  logger.info("Request received");
+  request.respond({ body: "Hello World" });
+}
+
