@@ -1,3 +1,4 @@
+import { qs } from "https://deno.land/x/qs/mod.ts";
 import {
   Server,
   ServerRequest,
@@ -16,10 +17,13 @@ const resolve = (request: ServerRequest) => {
   if (!store.middlewares) {
     store.middlewares = getAllMiddlewares();
   }
+  const urlParts = request.url.split("?");
+  const url = urlParts[0];
+  const query = urlParts.length > 1 ? qs.parse(urlParts[1]) : "";
 
   const middleware = store.middlewares.find((middleware: Middleware) => (
-    new RegExp(`^${middleware.route}$`).test(request.url) &&
-    ( 
+    new RegExp(`^${middleware.route}$`).test(url) &&
+    (
       middleware.method == "*" ||
       middleware.method == request.method
     )
@@ -28,7 +32,7 @@ const resolve = (request: ServerRequest) => {
   if (!middleware) {
     return request.respond({ status: 404, body: "Not found" });
   }
-
+  Object.assign(request, { query });
   return middleware.action(request);
 };
 
